@@ -17,7 +17,7 @@ const Header = ({ show, text }) => {
 	return (
 		<Animated.View
 			style={{ height }}
-			className="bg-navbar m-0 w-full flex justify-center w-100 shadow-2xl"
+			className="bg-navbar m-0 w-full flex justify-center items-center w-100 shadow-2xl"
 		>
 			<Text className="text-white text-xl">{text}</Text>
 		</Animated.View>
