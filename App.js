@@ -4,19 +4,21 @@ import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import { DataProvider } from "./states/DataContext";
+import { useFonts, Poppins_300Light } from "@expo-google-fonts/poppins";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+	let [fontsLoaded] = useFonts({
+		Poppins_300Light,
+	});
 	return (
 		<DataProvider>
 			<NavigationContainer>
 				<Stack.Navigator>
-					<Stack.Screen
-						name="Home"
-						component={Home}
-						options={{ headerShown: false }}
-					></Stack.Screen>
+					<Stack.Screen name="Home" options={{ headerShown: false }}>
+						{(props) => <Home {...props} fontsloaded={fontsLoaded} />}
+					</Stack.Screen>
 				</Stack.Navigator>
 			</NavigationContainer>
 		</DataProvider>
