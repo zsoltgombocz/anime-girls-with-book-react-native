@@ -9,13 +9,12 @@ export const DataProvider = ({ children }) => {
 
 	useEffect(() => {
 		const fetchPage = async (page = 1, filter = "all") => {
-			api(API_URL)
-				.get(`?page=${page}&filter=${filter}`)
-				.then(({ data }) => setData(data))
-				.catch((err) => {
-					console.error(err);
-					setData(null);
-				});
+			try {
+				const { data } = await api(API_URL).get(`?page=${page}&filter=${filter}`);
+				setData(data);
+			} catch (error) {
+				return new Error(error);
+			}
 		};
 
 		setTimeout(() => {
