@@ -9,9 +9,6 @@ module.exports = {
 	],
 	theme: {
 		extend: {
-			fontFamily: {
-				orbitron: ["Poppins", "sans-serif"],
-			},
 			height: {
 				128: "32rem",
 			},
