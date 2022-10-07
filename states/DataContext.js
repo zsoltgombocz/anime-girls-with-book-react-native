@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect, useContext } from "react";
 import { API_URL } from "@env";
+import { api } from "../api/api";
 
 export const DataContext = createContext();
 
@@ -7,18 +8,18 @@ export const DataProvider = ({ children }) => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		const getAllImages = async () => {
-			let images = [];
-			fetch(API_URL)
-				.then((response) => response.json())
-				.then((data) => {
-					data.map((f) => images.push(...f.content));
-					setData(images);
+		const fetchPage = async (page = 1, filter = "all") => {
+			api(API_URL)
+				.get(`?page=${page}&filter=${filter}`)
+				.then(({ data }) => setData(data))
+				.catch((err) => {
+					console.error(err);
+					setData(null);
 				});
 		};
 
 		setTimeout(() => {
-			getAllImages();
+			fetchPage();
 		}, 1000);
 	}, []);
 
