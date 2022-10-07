@@ -5,7 +5,6 @@ import { DataContext } from "../states/DataContext";
 import AppLoader from "../components/AppLoader";
 import Navigation from "../components/Navigation";
 import Header from "../components/Header";
-import FastImage from "react-native-fast-image";
 
 const Home = () => {
 	const { data } = useContext(DataContext);
@@ -15,7 +14,8 @@ const Home = () => {
 	const [scrollDirection, setScrollDirection] = useState("");
 
 	useEffect(() => {
-		if (data.length > 0) {
+		console.log(data);
+		if (data.data.length > 0) {
 			setExpand(false);
 		}
 	}, [data]);
@@ -38,17 +38,8 @@ const Home = () => {
 	return (
 		<View className="h-full w-screen bg-gray">
 			<View className="bg-navbar top-0 h-10 m-0 p-0 absolute w-screen"></View>
-			<SafeAreaView className="h-screen text-center flex justify-center items-center m-0 p-0">
+			<SafeAreaView className="h-screen text-center flex m-0 p-0">
 				<Header show={!expand} text={"All Girls With Book"} />
-				<FastImage
-					style={{ width: 200, height: 200 }}
-					source={{
-						uri: "https://unsplash.it/400/400?image=1",
-						headers: { Authorization: "someAuthToken" },
-						priority: FastImage.priority.normal,
-					}}
-					resizeMode={FastImage.resizeMode.contain}
-				/>
 			</SafeAreaView>
 			<Navigation expanded={expand} scroll={scrollDirection} />
 		</View>
