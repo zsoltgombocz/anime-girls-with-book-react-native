@@ -1,11 +1,13 @@
 import { View, Text, Animated, ActivityIndicator } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 
 import { Dimensions } from "react-native";
 import AppLoader from "./AppLoader";
 import NavigationIcon from "./NavigationIcon";
+import { ImageDisplayContext } from "../states/ImageDisplayContext";
 
 const Navigation = ({ expanded, scroll }) => {
+	const { setData } = useContext(ImageDisplayContext);
 	const windowHeight = Dimensions.get("window").height;
 	const height = useRef(new Animated.Value(windowHeight + 200)).current;
 	const scale = useRef(new Animated.Value(0)).current;
@@ -51,6 +53,11 @@ const Navigation = ({ expanded, scroll }) => {
 			Animated.timing(height, { toValue: 0, useNativeDriver: false }).start();
 		}
 	}, [scroll]);
+
+	const navigate = (id) => {
+		setData({ show: false });
+		setSelected(id);
+	};
 	return (
 		<Animated.View
 			className={`bg-navbar w-full bottom-0 absolute shadow`}
@@ -79,31 +86,31 @@ const Navigation = ({ expanded, scroll }) => {
 					style={{ height: scrollHeightChange }}
 				>
 					<NavigationIcon
-						onPress={() => setSelected(0)}
+						onPress={() => navigate(0)}
 						active={selected === 0 ? true : false}
 						scale={scale}
 						icon={"home"}
 					/>
 					<NavigationIcon
-						onPress={() => setSelected(1)}
+						onPress={() => navigate(1)}
 						active={selected === 1 ? true : false}
 						scale={scale}
 						icon={"filter"}
 					/>
 					<NavigationIcon
-						onPress={() => setSelected(2)}
+						onPress={() => navigate(2)}
 						active={selected === 2 ? true : false}
 						scale={scale}
 						icon={"plus"}
 					/>
 					<NavigationIcon
-						onPress={() => setSelected(3)}
+						onPress={() => navigate(3)}
 						active={selected === 3 ? true : false}
 						scale={scale}
 						icon={"info"}
 					/>
 					<NavigationIcon
-						onPress={() => setSelected(4)}
+						onPress={() => navigate(4)}
 						active={selected === 4 ? true : false}
 						scale={scale}
 						icon={"settings"}
