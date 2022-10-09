@@ -39,7 +39,7 @@ const Masonry = ({ data = null }) => {
 	return data ? (
 		<ScrollView
 			removeClippedSubviews={true}
-			className=""
+			className="relative"
 			onScroll={({ nativeEvent }) => {
 				if (isCloseToBottom(nativeEvent)) {
 					getNextPage();
