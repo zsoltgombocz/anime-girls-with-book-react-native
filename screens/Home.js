@@ -2,11 +2,10 @@ import { View, Text, Image, Animated, ScrollView } from "react-native";
 import React, { useContext, useRef, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DataContext } from "../states/DataContext";
-import AppLoader from "../components/AppLoader";
 import Navigation from "../components/Navigation";
 import Header from "../components/Header";
 import Masonry from "../components/masonry/Masonry";
-import MasonryImage from "../components/masonry/MasonryImage";
+import ImageDisplayRoot from "../components/ImageDisplayRoot";
 
 const Home = ({ fontsloaded }) => {
 	const { data } = useContext(DataContext);
@@ -42,8 +41,9 @@ const Home = ({ fontsloaded }) => {
 
 	return (
 		<View className="h-full w-screen bg-gray">
-			<View className="bg-navbar top-0 h-10 m-0 p-0 absolute w-screen"></View>
-			<SafeAreaView className="h-screen text-center flex m-0 p-0">
+			<View className="bg-navbar top-0 h-10 m-0 p-0 absolute w-screen z-20"></View>
+			<SafeAreaView className="h-screen text-center flex m-0 p-0 relative">
+				<ImageDisplayRoot />
 				<Header show={!expand} text={"All Girls With Book"} />
 				<Masonry data={masonryData} />
 			</SafeAreaView>
