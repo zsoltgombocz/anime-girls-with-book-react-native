@@ -14,17 +14,12 @@ const Home = ({ fontsloaded }) => {
 	const [expand, setExpand] = useState(true);
 	const [scroll, setScroll] = useState(0);
 	const [scrollDirection, setScrollDirection] = useState("");
-	const [masonryData, setMasonryData] = useState([null, null]);
+	const [masonryData, setMasonryData] = useState(null);
 
 	useEffect(() => {
-		if (data && data.data && fontsloaded) {
-			if (data.data.length > 0) {
-				console.log(data.data);
-				let masonryImages = data.data.map((img) => <MasonryImage imgObj={img} />);
-				setMasonryData([
-					masonryImages.slice(0, masonryImages.length / 2),
-					masonryImages.slice(masonryImages.length / 2),
-				]);
+		if (data && data && fontsloaded) {
+			if (data.length > 0) {
+				setMasonryData(data);
 				setExpand(false);
 			}
 		}
@@ -50,7 +45,7 @@ const Home = ({ fontsloaded }) => {
 			<View className="bg-navbar top-0 h-10 m-0 p-0 absolute w-screen"></View>
 			<SafeAreaView className="h-screen text-center flex m-0 p-0">
 				<Header show={!expand} text={"All Girls With Book"} />
-				<Masonry rowA={masonryData[0]} rowB={masonryData[1]} />
+				<Masonry data={masonryData} />
 			</SafeAreaView>
 			<Navigation expanded={expand} scroll={scrollDirection} />
 		</View>
