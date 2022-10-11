@@ -4,12 +4,17 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { Dimensions } from "react-native";
 import AppLoader from "./AppLoader";
 import NavigationIcon from "./NavigationIcon";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { NavigationContext } from "../states/NavigationContext";
 
 const Navigation = ({ expanded, scroll }) => {
 	const windowHeight = Dimensions.get("window").height;
 	const height = useRef(new Animated.Value(windowHeight + 200)).current;
 	const scale = useRef(new Animated.Value(0)).current;
 	const loaderScale = useRef(new Animated.Value(0)).current;
+
+	const navigation = useNavigation();
+	const { getCurrentScreen, setCurrentScreen } = useContext(NavigationContext);
 
 	const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -52,8 +57,9 @@ const Navigation = ({ expanded, scroll }) => {
 		}
 	}, [scroll]);
 
-	const navigate = (id) => {
-		setSelected(id);
+	const navigate = (screen) => {
+		navigation.navigate(screen);
+		setCurrentScreen(screen);
 	};
 	return (
 		<Animated.View
@@ -83,26 +89,20 @@ const Navigation = ({ expanded, scroll }) => {
 					style={{ height: scrollHeightChange }}
 				>
 					<NavigationIcon
-						onPress={() => navigate(0)}
-						active={selected === 0 ? true : false}
+						onPress={() => navigate("Home")}
+						active={getCurrentScreen() === "Home" ? true : false}
 						scale={scale}
 						icon={"home"}
 					/>
 					<NavigationIcon
-						onPress={() => navigate(1)}
-						active={selected === 1 ? true : false}
+						onPress={() => navigate("Filter")}
+						active={getCurrentScreen() === "Filter" ? true : false}
 						scale={scale}
 						icon={"filter"}
 					/>
 					<NavigationIcon
-						onPress={() => navigate(2)}
-						active={selected === 2 ? true : false}
-						scale={scale}
-						icon={"plus"}
-					/>
-					<NavigationIcon
-						onPress={() => navigate(3)}
-						active={selected === 3 ? true : false}
+						onPress={() => navigate("Information")}
+						active={getCurrentScreen() === "Information" ? true : false}
 						scale={scale}
 						icon={"info"}
 					/>
