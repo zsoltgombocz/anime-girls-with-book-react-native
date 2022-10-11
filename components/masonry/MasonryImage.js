@@ -1,14 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useContext } from "react";
-import { Dimensions, Image, View, Text, ActivityIndicator, TouchableHighlight } from "react-native";
-import { ImageDisplayContext } from "../../states/ImageDisplayContext";
+import React, { useState } from "react";
+import { Image, View, ActivityIndicator, TouchableHighlight } from "react-native";
 import Capsule from "../Capsule";
-import DisplayImage from "./DisplayImage";
 
-const MasonryImage = ({ imgObj, scrollEnableFc }) => {
+const MasonryImage = ({ imgObj }) => {
 	const [loaded, setLoaded] = useState(false);
 	const [imageRatio, setImageRation] = useState(1);
-	const { data, setData } = useContext(ImageDisplayContext);
 	const navgiation = useNavigation();
 
 	return (
@@ -16,17 +13,12 @@ const MasonryImage = ({ imgObj, scrollEnableFc }) => {
 			<TouchableHighlight
 				className="z-1 relative"
 				onPress={() => {
-					navgiation.navigate("ImagePreview", {
-						url: imgObj.url,
-						ratio: imageRatio,
-					});
-					/*if (!data.showing) {
-						setData({
-							show: true,
+					if (loaded) {
+						navgiation.navigate("ImagePreview", {
 							url: imgObj.url,
 							ratio: imageRatio,
 						});
-					}*/
+					}
 				}}
 				underlayColor="white"
 			>
