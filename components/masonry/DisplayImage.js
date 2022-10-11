@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import {
 	Animated,
@@ -10,21 +11,23 @@ import {
 } from "react-native";
 import Capsule from "../Capsule";
 
-const DisplayImage = ({ url, ratio, setter }) => {
+const DisplayImage = ({ route }) => {
+	const { url, ratio } = route.params;
+	const navigation = useNavigation();
 	const [imageRatio, setImageRation] = useState(1);
 	return (
 		<TouchableHighlight
-			className="absolute w-screen h-screen top-0 left-0 z-10 flex-1 items-center"
+			className="h-screen flex justify-center bottom-0 absolute items-center bg"
 			blurRadius={10}
 			onPress={() => {
-				setter({ show: false });
+				navigation.goBack();
 			}}
 			underlayColor="transparent"
 		>
-			<View className="flex h-full items-center justify-center">
-				<View className="bg-gray/70 w-screen h-full absolute"></View>
+			<View className="flex items-center justify-center">
+				<View className=""></View>
 				<Image
-					className={"rounded-lg z-10 w-full bg-gray"}
+					className={"rounded-lg w-full"}
 					source={{ uri: url }}
 					style={{ aspectRatio: ratio }}
 				/>
