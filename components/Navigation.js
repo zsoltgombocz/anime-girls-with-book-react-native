@@ -1,13 +1,11 @@
-import { View, Text, Animated, ActivityIndicator } from "react-native";
+import { Text, Animated, ActivityIndicator } from "react-native";
 import React, { useEffect, useRef, useState, useContext } from "react";
 
 import { Dimensions } from "react-native";
 import AppLoader from "./AppLoader";
 import NavigationIcon from "./NavigationIcon";
-import { ImageDisplayContext } from "../states/ImageDisplayContext";
 
 const Navigation = ({ expanded, scroll }) => {
-	const { setData } = useContext(ImageDisplayContext);
 	const windowHeight = Dimensions.get("window").height;
 	const height = useRef(new Animated.Value(windowHeight + 200)).current;
 	const scale = useRef(new Animated.Value(0)).current;
@@ -55,7 +53,6 @@ const Navigation = ({ expanded, scroll }) => {
 	}, [scroll]);
 
 	const navigate = (id) => {
-		setData({ show: false });
 		setSelected(id);
 	};
 	return (
