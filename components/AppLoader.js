@@ -7,6 +7,7 @@ const AppLoader = ({ text }) => {
 
 	const scale = useRef(new Animated.Value(1)).current;
 	const imageProgress = useRef(new Animated.Value(0)).current;
+	const textBounce = useRef(new Animated.Value(1)).current;
 
 	useLayoutEffect(() => {
 		const loaders = [
@@ -19,15 +20,28 @@ const AppLoader = ({ text }) => {
 		Animated.parallel([
 			Animated.spring(imageProgress, { toValue: 1, useNativeDriver: true }),
 			Animated.timing(scale, { toValue: 1, useNativeDriver: true }),
+			Animated.loop(
+				Animated.stagger(500, [
+					Animated.timing(textBounce, { toValue: 1.2, useNativeDriver: true }),
+					Animated.timing(textBounce, { toValue: 1, useNativeDriver: true }),
+				])
+			),
 		]).start();
 	}, []);
 
 	return (
-		<View className="absolute bottom-0 w-screen">
+		<View className="absolute bottom-0 w-screen h-screenflex flex-col items-center justify-between">
+			<View className="flex flex-grow items-center justify-center">
+				<Animated.View style={{ transform: [{ scale: textBounce }] }}>
+					<Text style={{ fontFamily: "Poppins" }} className="text-4xl text-red">
+						LOADING
+					</Text>
+				</Animated.View>
+			</View>
 			<Animated.Image
 				style={{ opacity: imageProgress, transform: [{ scale }] }}
 				source={imgSrc}
-				className="mx-auto"
+				className="mx-auto flex-shrink"
 			/>
 		</View>
 	);
