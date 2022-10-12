@@ -1,14 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, ActivityIndicator } from "react-native";
 import { DataContext } from "../../states/DataContext";
 import MasonryImage from "./MasonryImage";
 import { encode as btoa } from "base-64";
 
-import { DATA_PER_PAGE } from "@env";
-
 const Masonry = ({ data = null }) => {
 	const [cols, setCols] = useState([null, null]);
-	const { getNextPage } = useContext(DataContext);
+	const { getNextPage, page } = useContext(DataContext);
 
 	const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
 		const paddingToBottom = 300;
@@ -17,26 +15,25 @@ const Masonry = ({ data = null }) => {
 
 	useEffect(() => {
 		const constructRows = () => {
-			const page = data.length / DATA_PER_PAGE;
+			const p = page.current_page;
 			let colA = [];
 			let colB = [];
-			for (let i = 1; i <= page; i++) {
-				colA = colA.concat(
-					data.slice((i - 1) * DATA_PER_PAGE, i * DATA_PER_PAGE - DATA_PER_PAGE / 2)
-				);
-				colB = colB.concat(
-					data.slice(i * DATA_PER_PAGE - DATA_PER_PAGE / 2, i * DATA_PER_PAGE)
-				);
-			}
+			data.forEach((d, i) => {
+				if (i % 2 === 0) {
+					colB.push(d);
+				} else {
+					colA.push(d);
+				}
+			});
 			setCols([colA, colB]);
 		};
 
-		if (data && data.length >= DATA_PER_PAGE) {
+		if (data && data.length !== 0) {
 			constructRows();
 		}
 	}, [data]);
 
-	return data ? (
+	return data && data.length !== 0 ? (
 		<ScrollView
 			removeClippedSubviews={true}
 			className="relative"
@@ -63,7 +60,9 @@ const Masonry = ({ data = null }) => {
 			</View>
 		</ScrollView>
 	) : (
-		<></>
+		<>
+			<ActivityIndicator color="black" />
+		</>
 	);
 };
 
