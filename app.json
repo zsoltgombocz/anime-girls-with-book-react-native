@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon1.png",
         "backgroundColor": "#FFFFFF"
@@ -29,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "18df7e79-7748-4ff3-8ba5-05dd8b7b82c0"
+      }
     }
   }
 }
