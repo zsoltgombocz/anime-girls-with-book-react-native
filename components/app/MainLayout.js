@@ -49,7 +49,7 @@ const MainLayout = ({ children }) => {
 		<View className="h-full w-screen relative">
 			<View className="bg-navbar top-0 h-10 m-0 p-0 absolute w-screen z-20"></View>
 
-			<SafeAreaView className="h-screen text-center flex m-0 p-0">
+			<SafeAreaView className="h-full text-center flex m-0 p-0">
 				{getCurrentScreen().screenTitle !== "" ? (
 					<Header show={!expand} text={getCurrentScreen().screenTitle} />
 				) : (
@@ -63,3 +63,4 @@ const MainLayout = ({ children }) => {
 };
 
 export default MainLayout;
+//
