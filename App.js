@@ -2,31 +2,45 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import { DataProvider } from "./states/DataContext";
-import { useFonts, Poppins_300Light } from "@expo-google-fonts/poppins";
 import DisplayImage from "./components/masonry/DisplayImage";
 import MainLayout from "./components/MainLayout";
-import Information from "./components/Information";
-import { NavigationContext, NavigationProvider } from "./states/NavigationContext";
+import Information from "./screens/Information";
+import Popup from "./screens/Popup";
+import Rate from "./screens/Rate";
+import { NavigationProvider } from "./states/NavigationContext";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-	let [fontsLoaded] = useFonts({
-		Poppins_300Light,
-	});
 	return (
 		<DataProvider>
 			<NavigationProvider>
 				<NavigationContainer>
-					<MainLayout fontsloaded={fontsLoaded}>
+					<MainLayout>
 						<Stack.Navigator>
-							<Stack.Screen name="Home" options={{ headerShown: false }}>
-								{(props) => <Home {...props} fontsloaded={fontsLoaded} />}
+							<Stack.Screen
+								name="Home"
+								options={{ headerShown: false, animation: "none" }}
+							>
+								{(props) => <Home {...props} />}
 							</Stack.Screen>
 							<Stack.Screen
 								name="Information"
-								options={{ headerShown: false }}
+								options={{
+									animation: "none",
+									headerShown: false,
+									modalBackgroundOpacity: 0.5,
+								}}
 								component={Information}
+							></Stack.Screen>
+							<Stack.Screen
+								name="Rate"
+								options={{
+									headerShown: false,
+									modalBackgroundOpacity: 0.5,
+									animation: "none",
+								}}
+								component={Rate}
 							></Stack.Screen>
 							<Stack.Screen
 								name="ImagePreview"
@@ -37,6 +51,15 @@ export default function App() {
 									animation: "flip",
 								}}
 								component={DisplayImage}
+							></Stack.Screen>
+							<Stack.Screen
+								name="Popup"
+								options={{
+									presentation: "transparentModal",
+									headerShown: false,
+									animation: "none",
+								}}
+								component={Popup}
 							></Stack.Screen>
 						</Stack.Navigator>
 					</MainLayout>
