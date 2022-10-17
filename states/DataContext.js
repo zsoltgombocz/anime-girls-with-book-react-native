@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect, useContext } from "react";
 import { API_URL } from "@env";
 import { api } from "../api/api";
+import { encode as btoa } from "base-64";
 
 export const DataContext = createContext();
 
@@ -19,7 +20,7 @@ export const DataProvider = ({ children }) => {
 
 	const fetchPage = async (page = 1, filter = "all") => {
 		try {
-			const { data } = await api(API_URL).get(`?page=${page}&filter=${filter}`);
+			const { data } = await api(API_URL).get(`?page=${page}&filter=${btoa(filter)}`);
 			const { total, total_page, current_page, from, to } = data;
 			setPage({ total, total_page, current_page, from, to, filter });
 
