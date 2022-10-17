@@ -26,7 +26,8 @@
         "foregroundImage": "./assets/adaptive-icon1.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "agwb.com"
+      "package": "agwb.com",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
