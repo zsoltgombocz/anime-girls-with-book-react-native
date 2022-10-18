@@ -34,56 +34,56 @@ const CategorySelect = ({ selectables }) => {
 				Animated.spring(circleHeight, {
 					toValue: 500,
 					duration: 100,
-					useNativeDriver: true,
+					useNativeDriver: false,
 				}),
 				Animated.spring(circleWidth, {
 					toValue: Dimensions.get("window").width - 40,
 					duration: 100,
-					useNativeDriver: true,
+					useNativeDriver: false,
 				}),
 				Animated.spring(radius, {
 					toValue: 50,
 					duration: 100,
-					useNativeDriver: true,
+					useNativeDriver: false,
 				}),
 				Animated.spring(iconMargin, {
 					toValue: 18,
 					duration: 100,
-					useNativeDriver: true,
+					useNativeDriver: false,
 				}),
-			]),
 				Animated.spring(filterOpacity, {
 					toValue: 1,
 					duration: 100,
-					useNativeDriver: true,
-				}).start();
+					useNativeDriver: false,
+				}),
+			]).start();
 		} else {
 			Animated.stagger(50, [
 				Animated.timing(filterOpacity, {
 					toValue: 0,
 					duration: 100,
-					useNativeDriver: true,
+					useNativeDriver: false,
 				}),
 				Animated.parallel([
 					Animated.spring(circleHeight, {
 						toValue: 65,
 						duration: 100,
-						useNativeDriver: true,
+						useNativeDriver: false,
 					}),
 					Animated.spring(circleWidth, {
 						toValue: 65,
 						duration: 100,
-						useNativeDriver: true,
+						useNativeDriver: false,
 					}),
 					Animated.spring(radius, {
 						toValue: 999,
 						duration: 100,
-						useNativeDriver: true,
+						useNativeDriver: false,
 					}),
 					Animated.spring(iconMargin, {
 						toValue: 8,
 						duration: 100,
-						useNativeDriver: true,
+						useNativeDriver: false,
 					}),
 				]),
 			]).start();
