@@ -58,7 +58,7 @@ const Navigation = ({ expanded }) => {
 	};
 	return (
 		<Animated.View
-			className={`bg-navbar w-full bottom-0 absolute shadow rounded-t-sm`}
+			className={`bg-navbar w-full bottom-0 absolute shadow rounded-t-md`}
 			style={{
 				height: height,
 				shadowColor: "#171717",
