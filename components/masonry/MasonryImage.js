@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, View, ActivityIndicator, TouchableHighlight } from "react-native";
 import Capsule from "../Capsule";
 
 const MasonryImage = ({ imgObj }) => {
 	const [loaded, setLoaded] = useState(false);
-	const [imageRatio, setImageRation] = useState(1);
+	const [imageRatio, setImageRation] = useState(
+		imgObj.dimensions.width / imgObj.dimensions.height
+	);
 	const navgiation = useNavigation();
 
 	return (
@@ -29,12 +31,7 @@ const MasonryImage = ({ imgObj }) => {
 						</View>
 					)}
 					<Image
-						onLoad={({
-							nativeEvent: {
-								source: { width, height },
-							},
-						}) => {
-							setImageRation(width / height);
+						onLoad={() => {
 							setLoaded(true);
 						}}
 						style={{ aspectRatio: imageRatio }}
@@ -43,7 +40,7 @@ const MasonryImage = ({ imgObj }) => {
 					/>
 				</>
 			</TouchableHighlight>
-			{loaded && <Capsule text={imgObj.category} extraClass={"mt-2"} />}
+			{loaded && <Capsule text={imgObj.category} extraClass={"mt-1"} />}
 		</View>
 	);
 };
