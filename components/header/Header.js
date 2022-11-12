@@ -1,19 +1,16 @@
-import { View, Text, Animated } from "react-native";
+import { Text, Animated } from "react-native";
 import React, { useRef, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-const Header = ({ show, text }) => {
+const Header = ({ text }) => {
 	const height = useRef(new Animated.Value(0)).current;
 
 	useEffect(() => {
-		if (show) {
-			Animated.spring(height, {
-				toValue: 60,
-				duration: 1000,
-				useNativeDriver: false,
-			}).start();
-		}
-	}, [show]);
+		Animated.spring(height, {
+			toValue: 60,
+			duration: 1000,
+			useNativeDriver: false,
+		}).start();
+	}, []);
 	return (
 		<Animated.View
 			style={{ height }}
