@@ -14,7 +14,7 @@ const CategorySelect = ({ selectables }) => {
 	const iconMargin = useRef(new Animated.Value(8)).current;
 	const filterOpacity = useRef(new Animated.Value(0)).current;
 
-	const { fetchPage, clearData } = useContext(DataContext);
+	const { fetchPage, clearData, setCurrentFilter } = useContext(DataContext);
 	const { setTitle } = useContext(NavigationContext);
 
 	const selectCategory = (index) => {
@@ -26,6 +26,7 @@ const CategorySelect = ({ selectables }) => {
 		}
 		clearData();
 		setSelected(index);
+		setCurrentFilter(index);
 		fetchPage(1, selectables[index]);
 	};
 	useEffect(() => {

@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
 	const [categories, setCategories] = useState([]);
 	const [page, setPage] = useState([]);
 	const [requestInProgress, setRequestInProgress] = useState(false);
+	const [currentFilter, setCurrentFilter] = useState(0);
 
 	useEffect(() => {
 		getCategories();
@@ -55,7 +56,18 @@ export const DataProvider = ({ children }) => {
 	};
 
 	return (
-		<DataContext.Provider value={{ data, getNextPage, fetchPage, categories, page, clearData }}>
+		<DataContext.Provider
+			value={{
+				data,
+				getNextPage,
+				fetchPage,
+				categories,
+				page,
+				clearData,
+				setCurrentFilter,
+				currentFilter,
+			}}
+		>
 			{children}
 		</DataContext.Provider>
 	);
