@@ -52,9 +52,9 @@ const Navigation = ({ expanded }) => {
 		}
 	}, [scroll]);*/
 
-	const navigate = (screen, title, forceEmptyHeader = false) => {
+	const navigate = (screen) => {
 		navigation.navigate(screen);
-		setCurrentScreen(screen, title, forceEmptyHeader);
+		setCurrentScreen(screen);
 	};
 	return (
 		<Animated.View
@@ -84,14 +84,14 @@ const Navigation = ({ expanded }) => {
 					/>
 
 					<NavigationIcon
-						onPress={() => navigate("Information", "", true)}
+						onPress={() => navigate("Information")}
 						active={getCurrentScreen().screen === "Information" ? true : false}
 						scale={scale}
 						icon={"info"}
 					/>
 
 					<NavigationIcon
-						onPress={() => navigate("Rate", "", true)}
+						onPress={() => navigate("Rate")}
 						active={getCurrentScreen().screen === "Rate" ? true : false}
 						scale={scale}
 						icon={"start"}
