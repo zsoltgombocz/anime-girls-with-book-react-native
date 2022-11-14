@@ -13,9 +13,14 @@ const CategorySelect = ({ selectables }) => {
 	const radius = useRef(new Animated.Value(999)).current;
 	const iconMargin = useRef(new Animated.Value(8)).current;
 	const filterOpacity = useRef(new Animated.Value(0)).current;
+	const circleScale = useRef(new Animated.Value(1)).current;
+
+	const [visible, setVisible] = useState(true);
 
 	const { fetchPage, clearData, setCurrentFilter } = useContext(DataContext);
-	const { setTitle } = useContext(NavigationContext);
+	const { setTitle, getCurrentScrollDirection } = useContext(NavigationContext);
+
+	const scrollDir = getCurrentScrollDirection();
 
 	const selectCategory = (index) => {
 		setOpened(false);
@@ -29,6 +34,23 @@ const CategorySelect = ({ selectables }) => {
 		setCurrentFilter(index);
 		fetchPage(1, selectables[index]);
 	};
+
+	useEffect(() => {
+		if (scrollDir === "up") {
+			Animated.spring(circleScale, {
+				toValue: 1,
+				duration: 500,
+				useNativeDriver: false,
+			}).start();
+		} else {
+			if (opened) setOpened(false);
+			Animated.spring(circleScale, {
+				toValue: 0,
+				duration: 500,
+				useNativeDriver: false,
+			}).start();
+		}
+	}, [scrollDir]);
 	useEffect(() => {
 		if (opened) {
 			Animated.stagger(50, [
@@ -82,11 +104,22 @@ const CategorySelect = ({ selectables }) => {
 	return (
 		<Animated.View
 			className="bg-navbar flex items-center justify-center absolute bottom-[85px] z-50"
-			style={{ height: circleHeight, width: circleWidth, borderRadius: radius, right: 20 }}
+			style={{
+				height: circleHeight,
+				width: circleWidth,
+				borderRadius: radius,
+				right: 20,
+				transform: [{ scale: circleScale }],
+			}}
 		>
 			<Animated.View
 				className={"z-50"}
-				style={{ position: "absolute", top: 0, left: 0, margin: iconMargin }}
+				style={{
+					position: "absolute",
+					top: 0,
+					left: 0,
+					margin: iconMargin,
+				}}
 			>
 				<TouchableHighlight onPress={() => setOpened(!opened)} underlayColor="transparent">
 					<Text className={`${opened ? "p-0" : "p-[10px]"}`}>
