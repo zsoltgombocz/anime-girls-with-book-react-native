@@ -1,5 +1,5 @@
 import { Animated } from "react-native";
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext, useState } from "react";
 
 import { Dimensions } from "react-native";
 import AppLoader from "../app/AppLoader";
@@ -7,11 +7,12 @@ import NavigationIcon from "./NavigationIcon";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationContext } from "../../states/NavigationContext";
 
-const Navigation = ({ expanded }) => {
+const Navigation = ({ expanded, hide }) => {
 	const windowHeight = Dimensions.get("window").height;
 	const height = useRef(new Animated.Value(windowHeight + 200)).current;
 	const scale = useRef(new Animated.Value(0)).current;
 	const loaderScale = useRef(new Animated.Value(0)).current;
+	const [hidden, setHidden] = useState(false);
 
 	const navigation = useNavigation();
 	const { getCurrentScreen, setCurrentScreen } = useContext(NavigationContext);
@@ -40,17 +41,15 @@ const Navigation = ({ expanded }) => {
 		}
 	}, [expanded]);
 
-	/*useEffect(() => {
-		if (scroll === "up" && hidden === true) {
+	useEffect(() => {
+		if (!hide && hidden) {
 			setHidden(false);
-
-			Animated.timing(height, { toValue: 65, useNativeDriver: false }).start();
-		} else if (scroll === "down" && hidden === false) {
+			Animated.spring(height, { toValue: 65, useNativeDriver: false }).start();
+		} else {
 			setHidden(true);
-
 			Animated.timing(height, { toValue: 0, useNativeDriver: false }).start();
 		}
-	}, [scroll]);*/
+	}, [hide]);
 
 	const navigate = (screen) => {
 		navigation.navigate(screen);
