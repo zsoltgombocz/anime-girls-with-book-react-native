@@ -3,10 +3,12 @@ import { View, ScrollView, ActivityIndicator } from "react-native";
 import { DataContext } from "../../states/DataContext";
 import MasonryImage from "./MasonryImage";
 import { encode as btoa } from "base-64";
+import { NavigationContext } from "../../states/NavigationContext";
 
 const Masonry = ({ data = null }) => {
 	const [cols, setCols] = useState([null, null]);
 	const { getNextPage, page } = useContext(DataContext);
+	const { setScrollDirection } = useContext(NavigationContext);
 
 	const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
 		const paddingToBottom = 300;
@@ -38,6 +40,10 @@ const Masonry = ({ data = null }) => {
 			removeClippedSubviews={true}
 			className="relative"
 			onScroll={({ nativeEvent }) => {
+				setScrollDirection(
+					nativeEvent.contentOffset.y !== 0 && nativeEvent.velocity.y > 0 ? "down" : "up"
+				);
+
 				if (isCloseToBottom(nativeEvent)) {
 					getNextPage();
 				}
