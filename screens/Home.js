@@ -13,7 +13,6 @@ const Home = () => {
 			setMasonryData(data);
 		}
 	}, [data]);
-
 	return (
 		<>
 			<View className="relative w-full h-full">
