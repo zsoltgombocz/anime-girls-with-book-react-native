@@ -22,7 +22,6 @@ const Navigation = ({ expanded, hide }) => {
 	const scrollHeightChange = useRef(new Animated.Value(65)).current;
 
 	useEffect(() => {
-		console.log(expanded);
 		if (expanded) {
 			Animated.spring(loaderScale, { toValue: 1, useNativeDriver: true }).start();
 			Animated.loop(
