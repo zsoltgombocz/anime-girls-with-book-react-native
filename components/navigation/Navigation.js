@@ -22,6 +22,7 @@ const Navigation = ({ expanded, hide }) => {
 	const scrollHeightChange = useRef(new Animated.Value(65)).current;
 
 	useEffect(() => {
+		console.log(expanded);
 		if (expanded) {
 			Animated.spring(loaderScale, { toValue: 1, useNativeDriver: true }).start();
 			Animated.loop(
@@ -42,12 +43,14 @@ const Navigation = ({ expanded, hide }) => {
 	}, [expanded]);
 
 	useEffect(() => {
-		if (!hide && hidden) {
-			setHidden(false);
-			Animated.spring(height, { toValue: 65, useNativeDriver: false }).start();
-		} else {
-			setHidden(true);
-			Animated.timing(height, { toValue: 0, useNativeDriver: false }).start();
+		if (!expanded) {
+			if (!hide && hidden) {
+				setHidden(false);
+				Animated.spring(height, { toValue: 65, useNativeDriver: false }).start();
+			} else {
+				setHidden(true);
+				Animated.timing(height, { toValue: 0, useNativeDriver: false }).start();
+			}
 		}
 	}, [hide]);
 
