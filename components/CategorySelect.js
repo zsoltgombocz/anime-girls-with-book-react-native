@@ -13,9 +13,9 @@ const CategorySelect = ({ selectables }) => {
 	const radius = useRef(new Animated.Value(999)).current;
 	const iconMargin = useRef(new Animated.Value(8)).current;
 	const filterOpacity = useRef(new Animated.Value(0)).current;
-	const circleScale = useRef(new Animated.Value(1)).current;
+	const circleScale = useRef(new Animated.Value(0)).current;
 
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState(false);
 
 	const { fetchPage, clearData, setCurrentFilter } = useContext(DataContext);
 	const { setTitle, getCurrentScrollDirection } = useContext(NavigationContext);
@@ -36,21 +36,36 @@ const CategorySelect = ({ selectables }) => {
 	};
 
 	useEffect(() => {
-		if (scrollDir === "up") {
+		if (!visible) {
 			Animated.spring(circleScale, {
 				toValue: 1,
 				duration: 500,
 				useNativeDriver: false,
 			}).start();
-		} else {
-			if (opened) setOpened(false);
-			Animated.spring(circleScale, {
-				toValue: 0,
-				duration: 500,
-				useNativeDriver: false,
-			}).start();
+			setVisible(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (visible) {
+			if (scrollDir === "up") {
+				Animated.spring(circleScale, {
+					toValue: 1,
+					duration: 500,
+					useNativeDriver: false,
+				}).start();
+			} else {
+				if (opened) setOpened(false);
+
+				Animated.spring(circleScale, {
+					toValue: 0,
+					duration: 500,
+					useNativeDriver: false,
+				}).start();
+			}
 		}
 	}, [scrollDir]);
+
 	useEffect(() => {
 		if (opened) {
 			Animated.stagger(50, [
