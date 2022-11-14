@@ -18,16 +18,31 @@ export const NavigationProvider = ({ children }) => {
 
 	const [navigationData, setNavigationData] = useState({
 		screen: "Home",
+		scroll: "down",
 	});
 
 	const setCurrentScreen = (screenName) => {
-		setNavigationData({ screen: screenName });
+		setNavigationData({ ...navigationData, screen: screenName });
 	};
 
 	const getCurrentScreen = () => navigationData;
+	const getCurrentScrollDirection = () => navigationData.scroll;
+
+	const setScrollDirection = (dir) => {
+		if (dir !== getCurrentScrollDirection()) {
+			setNavigationData({ ...navigationData, scroll: dir });
+		}
+	};
 
 	return (
-		<NavigationContext.Provider value={{ setCurrentScreen, getCurrentScreen }}>
+		<NavigationContext.Provider
+			value={{
+				setCurrentScreen,
+				getCurrentScreen,
+				setScrollDirection,
+				getCurrentScrollDirection,
+			}}
+		>
 			{children}
 		</NavigationContext.Provider>
 	);
